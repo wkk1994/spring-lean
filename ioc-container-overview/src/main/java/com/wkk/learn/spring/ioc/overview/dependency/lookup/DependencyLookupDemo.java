@@ -13,6 +13,9 @@ import java.util.Map;
 /**
  * 依赖查找示例
  * 1，通过名称查找
+ * 2，通过类型查找
+ * 3，通过注解查找
+ * @author wkk1994
  */
 public class DependencyLookupDemo {
 
