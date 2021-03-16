@@ -26,6 +26,7 @@ public class DependencyLookupDemo {
         lookupInReadTime(beanFactory);
         lookupInLazy(beanFactory);
         lookupByType(beanFactory);
+        lookupByNameAndType(beanFactory);
         lookupCollectionsByType(beanFactory);
         lookupCollectionByAnnotationType(beanFactory);
 
@@ -60,6 +61,15 @@ public class DependencyLookupDemo {
     }
 
     /**
+     * 根据名称+类型查找
+     * @param beanFactory
+     */
+    private static void lookupByNameAndType(BeanFactory beanFactory) {
+        User user = beanFactory.getBean("user", User.class);
+        System.out.println("根据名称+类型查询：" + user);
+    }
+
+    /**
      * 根据类型查找集合对象
      * @param beanFactory
      */
@@ -77,7 +87,7 @@ public class DependencyLookupDemo {
     private static void lookupCollectionByAnnotationType(BeanFactory beanFactory) {
         if (beanFactory instanceof ListableBeanFactory) {
             Map<String, Object> beansOfType = ((ListableBeanFactory) beanFactory).getBeansWithAnnotation(Super.class);
-            System.out.println("根据类型查找集合对象：" +beansOfType);
+            System.out.println("根据注解查找集合对象：" +beansOfType);
         }
 
     }
