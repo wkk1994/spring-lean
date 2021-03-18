@@ -5,4 +5,6 @@ spring核心编程思想学习
 
 ## [第二章 重新认识IoC](https://github.com/wkk1994/spring-learn/blob/master/java-beans-demo)
 
-## [第二章 Spring IoC概述](https://github.com/wkk1994/spring-learn/blob/master/ioc-container-overview)
+## [第三章 Spring IoC概述](https://github.com/wkk1994/spring-learn/blob/master/ioc-container-overview)
+
+## [第四章 Spring Bean基础](https://github.com/wkk1994/spring-learn/blob/master/spring-bean)

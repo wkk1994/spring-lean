@@ -9,6 +9,10 @@ public class User {
 
     private String name;
 
+    public User() {
+        System.out.println("456789");
+    }
+
     public String getId() {
         return id;
     }
