@@ -1,3 +1,5 @@
+[toc]
+
 # 重新认识IoC
 
 * 代码位置 java-beans-demo

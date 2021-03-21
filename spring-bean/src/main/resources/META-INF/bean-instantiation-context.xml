@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 2.通过静态工厂方法实例化-->
+    <bean id="user-by-static-method" class="com.wkk.learn.spring.ioc.overview.dependency.model.User" factory-method="createUser"/>
+
+    <!-- 3.通过实例工厂方法实例化-->
+    <bean id = "userFactory" class="com.wkk.learn.spring.bean.definition.factory.DefaultUserFactory" />
+    <bean id="user-by-init-method" factory-bean="userFactory" factory-method="createUser"/>
+
+    <!-- 4.通过FactoryBean实例化-->
+    <bean id="user-by-factory-bean" class="com.wkk.learn.spring.bean.definition.factory.UserFactoryBean" />
+</beans>

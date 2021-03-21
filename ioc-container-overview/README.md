@@ -1,3 +1,5 @@
+[toc]
+
 # Spring IoC概述
 
 * 代码位置：ioc-container-overview
