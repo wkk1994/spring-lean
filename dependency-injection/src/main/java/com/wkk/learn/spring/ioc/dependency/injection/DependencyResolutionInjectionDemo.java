@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import javax.inject.Inject;
 import java.util.Collection;
 
 /**
@@ -17,6 +18,8 @@ import java.util.Collection;
 
 public class DependencyResolutionInjectionDemo {
 
+    @Inject
+    private User injectUser;
 
     @Autowired        // 依赖查找（处理过程）
     private User user;// DependencyDescriptor -->
@@ -39,6 +42,7 @@ public class DependencyResolutionInjectionDemo {
         DependencyResolutionInjectionDemo bean = applicationContext.getBean(DependencyResolutionInjectionDemo.class);
 
         System.out.println("demo.user: " + bean.user);
+        System.out.println("demo.inject: " + bean.injectUser);
         System.out.println("demo.users: " + bean.users);
     }
 
