@@ -36,7 +36,7 @@ public class CustomAnnotationDependencyInjectionDemo {
     }*/
 
     @Bean // 该方法必须为static
-    public  AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor() {
+    public static AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor() {
         AutowiredAnnotationBeanPostProcessor autowiredAnnotationBeanPostProcessor = new AutowiredAnnotationBeanPostProcessor();
         autowiredAnnotationBeanPostProcessor.setAutowiredAnnotationType(InjectUser.class);
         return autowiredAnnotationBeanPostProcessor;
