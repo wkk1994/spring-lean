@@ -1,4 +1,4 @@
-package com.wkk.learn.spring.dependency.lookup;
+package com.wkk.learn.spring.ioc.dependency.lookup;
 
 import com.wkk.learn.spring.ioc.overview.dependency.model.User;
 import org.springframework.beans.factory.ObjectProvider;

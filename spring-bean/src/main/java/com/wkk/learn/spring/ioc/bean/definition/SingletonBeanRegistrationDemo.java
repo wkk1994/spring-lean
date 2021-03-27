@@ -1,7 +1,7 @@
-package com.wkk.learn.spring.bean.definition;
+package com.wkk.learn.spring.ioc.bean.definition;
 
-import com.wkk.learn.spring.bean.definition.factory.DefaultUserFactory;
-import com.wkk.learn.spring.bean.definition.factory.UserFactory;
+import com.wkk.learn.spring.ioc.bean.definition.factory.DefaultUserFactory;
+import com.wkk.learn.spring.ioc.bean.definition.factory.UserFactory;
 import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

@@ -8,9 +8,9 @@
     <bean id="user-by-static-method" class="com.wkk.learn.spring.ioc.overview.dependency.model.User" factory-method="createUser"/>
 
     <!-- 3.通过实例工厂方法实例化-->
-    <bean id = "userFactory" class="com.wkk.learn.spring.bean.definition.factory.DefaultUserFactory" />
+    <bean id = "userFactory" class="com.wkk.learn.spring.ioc.bean.definition.factory.DefaultUserFactory" />
     <bean id="user-by-init-method" factory-bean="userFactory" factory-method="createUser"/>
 
     <!-- 4.通过FactoryBean实例化-->
-    <bean id="user-by-factory-bean" class="com.wkk.learn.spring.bean.definition.factory.UserFactoryBean" />
+    <bean id="user-by-factory-bean" class="com.wkk.learn.spring.ioc.bean.definition.factory.UserFactoryBean" />
 </beans>

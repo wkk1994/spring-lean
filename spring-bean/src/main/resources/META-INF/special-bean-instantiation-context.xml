@@ -5,6 +5,6 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="serviceLoader" class="org.springframework.beans.factory.serviceloader.ServiceLoaderFactoryBean">
-        <property name="serviceType" value="com.wkk.learn.spring.bean.definition.factory.UserFactory"/>
+        <property name="serviceType" value="com.wkk.learn.spring.ioc.bean.definition.factory.UserFactory"/>
     </bean>
 </beans>

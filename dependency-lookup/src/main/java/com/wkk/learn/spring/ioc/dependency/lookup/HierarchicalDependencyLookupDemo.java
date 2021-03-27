@@ -1,4 +1,4 @@
-package com.wkk.learn.spring.dependency.lookup;
+package com.wkk.learn.spring.ioc.dependency.lookup;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.HierarchicalBeanFactory;

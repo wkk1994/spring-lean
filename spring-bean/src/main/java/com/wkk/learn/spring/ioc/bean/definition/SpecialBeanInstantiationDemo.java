@@ -1,10 +1,8 @@
-package com.wkk.learn.spring.bean.definition;
+package com.wkk.learn.spring.ioc.bean.definition;
 
-import com.wkk.learn.spring.bean.definition.factory.DefaultUserFactory;
-import com.wkk.learn.spring.bean.definition.factory.UserFactory;
-import com.wkk.learn.spring.ioc.overview.dependency.model.User;
+import com.wkk.learn.spring.ioc.bean.definition.factory.DefaultUserFactory;
+import com.wkk.learn.spring.ioc.bean.definition.factory.UserFactory;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.serviceloader.ServiceLoaderFactoryBean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Iterator;

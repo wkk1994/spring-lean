@@ -1,4 +1,4 @@
-package com.wkk.learn.spring.bean.definition.factory;
+package com.wkk.learn.spring.ioc.bean.definition.factory;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

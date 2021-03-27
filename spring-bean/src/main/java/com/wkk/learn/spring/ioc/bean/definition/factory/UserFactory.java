@@ -1,4 +1,4 @@
-package com.wkk.learn.spring.bean.definition.factory;
+package com.wkk.learn.spring.ioc.bean.definition.factory;
 
 import com.wkk.learn.spring.ioc.overview.dependency.model.User;
 

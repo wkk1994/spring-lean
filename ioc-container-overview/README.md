@@ -19,7 +19,7 @@
 
 代码示例：
 
-[DependencyLookupDemo.java](https://github.com/wkk1994/spring-learn/blob/master/ioc-container-overview/src/main/java/com/wkk/learn/spring/ioc/overview/dependency/lookup/DependencyLookupDemo.java)
+[DependencyLookupDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/ioc-container-overview/src/main/java/com/wkk/learn/spring/ioc/overview/dependency/lookup/DependencyLookupDemo.java)
 
 > ObjectFactory和FactoryBean的关系：
 
@@ -40,7 +40,7 @@
 
 代码示例：
 
-[DependencyInjectionDemo.java](https://github.com/wkk1994/spring-learn/blob/master/ioc-container-overview/src/main/java/com/wkk/learn/spring/ioc/overview/dependency/injection/DependencyInjectionDemo.java)
+[DependencyInjectionDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/ioc-container-overview/src/main/java/com/wkk/learn/spring/ioc/overview/dependency/injection/DependencyInjectionDemo.java)
 
 ## Spring IoC依赖来源
 

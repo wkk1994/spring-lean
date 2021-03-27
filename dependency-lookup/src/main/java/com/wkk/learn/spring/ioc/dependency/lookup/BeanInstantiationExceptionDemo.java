@@ -1,4 +1,4 @@
-package com.wkk.learn.spring.dependency.lookup;
+package com.wkk.learn.spring.ioc.dependency.lookup;
 
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

@@ -1,4 +1,4 @@
-package com.wkk.learn.spring.bean.definition;
+package com.wkk.learn.spring.ioc.bean.definition;
 
 import com.wkk.learn.spring.ioc.overview.dependency.model.User;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
