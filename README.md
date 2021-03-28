@@ -1,7 +1,7 @@
 # spring-ioc-learn
 spring核心编程思想学习
 
-## [第一章 Spring核心特性]()
+## [第一章 Spring核心特性](https://github.com/wkk1994/spring-ioc-learn/blob/master/第一章Spring核心特性.md)
 
 ## [第二章 重新认识IoC](https://github.com/wkk1994/spring-ioc-learn/blob/master/java-beans-demo)
 
