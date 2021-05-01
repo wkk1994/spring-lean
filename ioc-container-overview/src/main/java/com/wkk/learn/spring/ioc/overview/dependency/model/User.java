@@ -1,13 +1,20 @@
 package com.wkk.learn.spring.ioc.overview.dependency.model;
 
+import org.springframework.beans.factory.BeanNameAware;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 /**
  * 简单用户类
  */
-public class User {
+public class User implements BeanNameAware {
 
     private String id;
 
     private String name;
+
+    private String beanBeam;
 
     public User() {
         System.out.println("456789");
@@ -42,5 +49,20 @@ public class User {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @PostConstruct
+    public void post() {
+        System.out.println("当前beanName: "+beanBeam+"初始化...");
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.println("当前beanName: "+beanBeam+"销毁...");
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        this.beanBeam = name;
     }
 }
