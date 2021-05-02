@@ -14,3 +14,5 @@ spring核心编程思想学习
 ## [第六章 Spring IoC依赖注入](https://github.com/wkk1994/spring-ioc-learn/blob/master/dependency-injection)
 
 ## [第七章 Spring IoC依赖来源](https://github.com/wkk1994/spring-ioc-learn/blob/master/dependency-source)
+
+## [第八章 Spring Bean的作用域](https://github.com/wkk1994/spring-ioc-learn/blob/master/bean-scope)
