@@ -17,6 +17,7 @@
         <module>dependency-injection</module>
         <module>dependency-source</module>
         <module>bean-scope</module>
+        <module>bean-cyclelife</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
