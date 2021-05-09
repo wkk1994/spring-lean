@@ -1,13 +1,16 @@
 package com.wkk.learn.spring.ioc.bean.cyclelife;
 
 import com.wkk.learn.spring.ioc.overview.dependency.model.User;
+import org.springframework.beans.factory.InitializingBean;
+
+import javax.annotation.PostConstruct;
 
 /**
  * @Description
  * @Author Wangkunkun
  * @Date 2021/5/6 10:21
  */
-public class UserHolder {
+public class UserHolder implements InitializingBean {
 
     private User user;
 
@@ -50,5 +53,22 @@ public class UserHolder {
                 ", number=" + number +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @PostConstruct
+    public void postConstruct() {
+        System.out.println("postConstruct() --> The User Holder V4");
+        this.description = "The User Holder V4";
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("afterPropertiesSet() --> The User Holder V5");
+        this.description = "The User Holder V5";
+    }
+
+    public void init() {
+        System.out.println("init() --> The User Holder V6");
+        this.description = "The User Holder V6";
     }
 }

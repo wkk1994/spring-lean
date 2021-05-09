@@ -37,50 +37,5 @@ public class InstantiationAwareBeanPostProcessorDemo {
         System.out.println(userHolder);
     }
 
-    /**
-     * 自定义Bean实例化前阶段
-     */
-    static class MyInstantiationAwareBeanPostProcessor implements InstantiationAwareBeanPostProcessor {
 
-        @Override
-        public Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
-            if(ObjectUtils.nullSafeEquals("superUser", beanName) && SuperUser.class.equals(beanClass)) {
-                return new SuperUser();
-            }
-            return null;
-        }
-
-        @Override
-        public boolean postProcessAfterInstantiation(Object bean, String beanName) throws BeansException {
-            if(ObjectUtils.nullSafeEquals("user", beanName) && User.class.equals(bean.getClass())) {
-                // "user" 对象不允许属性赋值（填入）（配置元信息 -> 属性值）
-                ((User) bean).setId("12345678");
-                ((User) bean).setName("asdhjf;kas;lfaj");
-                return false;
-            }
-            return true;
-        }
-
-        /**
-         * Spring Bean属性赋值前阶段，将 {@link PropertyValues} 进行修改
-         * @param pvs
-         * @param bean
-         * @param beanName
-         * @return
-         * @throws BeansException
-         */
-        @Override
-        public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) throws BeansException {
-            if(ObjectUtils.nullSafeEquals("userHolder", beanName) && UserHolder.class.equals(bean.getClass())) {
-                MutablePropertyValues mutablePropertyValues = new MutablePropertyValues(pvs);
-                mutablePropertyValues.add("number", "123");
-                if(mutablePropertyValues.contains("description")) {
-                    mutablePropertyValues.removePropertyValue("description");
-                    mutablePropertyValues.add("description", "The User Holder V2");
-                }
-                return mutablePropertyValues;
-            }
-            return null;
-        }
-    }
 }

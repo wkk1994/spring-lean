@@ -3,21 +3,19 @@ package com.wkk.learn.spring.ioc.bean.cyclelife;
 import com.wkk.learn.spring.ioc.overview.dependency.model.User;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 
 /**
- * @Description Bean 初始化生命周期示例
+ * @Description Bean实例化阶段示例，传统实例化方式和构造器依赖注入实例化方式
  * @Author Wangkunkun
  * @Date 2021/5/6 10:20
  */
-public class BeanInitializationLifecycleDemo {
+public class BeanInstantiationLifecycleDemo {
 
     public static void main(String[] args) {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         beanFactory.addBeanPostProcessor(new MyInstantiationAwareBeanPostProcessor());
-        // 添加CommonAnnotationBeanPostProcessor 支持@PostConstruct
-        beanFactory.addBeanPostProcessor(new CommonAnnotationBeanPostProcessor());
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+
         String[] localPath = {"META-INF/dependency-lookup-context.xml", "MATE-INF/bean-constructor-dependency-injection.xml"};
         reader.loadBeanDefinitions(localPath);
         // 通过 Bean Id 和类型进行依赖查找
