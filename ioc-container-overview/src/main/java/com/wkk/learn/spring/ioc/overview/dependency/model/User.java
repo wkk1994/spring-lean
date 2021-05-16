@@ -16,6 +16,8 @@ public class User implements BeanNameAware {
 
     private String beanBeam;
 
+    private City city;
+
     public User() {
         System.out.println("456789");
     }
@@ -48,6 +50,8 @@ public class User implements BeanNameAware {
         return "User{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", beanBeam='" + beanBeam + '\'' +
+                ", city=" + city +
                 '}';
     }
 
@@ -64,5 +68,13 @@ public class User implements BeanNameAware {
     @Override
     public void setBeanName(String name) {
         this.beanBeam = name;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 }
