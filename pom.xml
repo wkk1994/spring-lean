@@ -19,6 +19,7 @@
         <module>bean-scope</module>
         <module>bean-cyclelife</module>
         <module>configuration-metadata</module>
+        <module>resource</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
