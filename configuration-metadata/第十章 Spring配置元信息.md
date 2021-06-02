@@ -57,7 +57,7 @@ Spring中的xml文件的配置的xmlns和xsd之间的关系，以及xml文件的
 > bean命名前缀一般会被省略。
 > beans元素的作用：可以将一组bean元素放到beans元素中，这组bean元素都可以使用beans元素定义的属性，比如default-lazy-init、default-init-method。
 > 主动import其他配置时，被import是无法感知的，所以不太友好，一般建议平级的形式去引用其他xml配置，比如在load时，一次load多个xml配置。
-> BeanDefinitionHolder有beanDefinition、beanName、aliases三个属性，是dom解析后生成的对象。因为BeanDefinition没有beanName属性，所以使用这个类一次解析获得所有信息
+> BeanDefinitionHolder有beanDefinition、beanName、aliases三个属性，是dom解析后生成的对象。因为BeanDefinition没有beanName属性，所以使用这个类一次解析获得所有信息。
 
 ## 基于Properties资源装载SpringBean配置元信息
 
