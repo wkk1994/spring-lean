@@ -89,3 +89,59 @@ Spring Bean实例化方式通常有两种：
 实现细节：`AbstractAutowireCapableBeanFactory#populateBean`
 
 示例代码：[InstantiationAwareBeanPostProcessorDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/spring-bean/src/main/java/com/wkk/learn/spring/ioc/bean/cyclelife/InstantiationAwareBeanPostProcessorDemo.java)
+
+## Spring Bean属性赋值前阶段
+
+PropertyValues保存了Bean属性值元信息，Spring提供了扩展机制，可以在属性赋值之前对PropertyValues进行操作：
+
+* Spring 1.2 - 5.0：InstantiationAwareBeanPostProcessor#postProcessPropertyValues
+
+  方法如果返回null，表示不对属性值进行设置，直接返回。
+
+* Spring 5.1：InstantiationAwareBeanPostProcessor#postProcessProperties
+
+  方法如果返回null，表示不对属性值进行修改，按照原先的PropertyValue进行属性填充。
+
+实现细节：`AbstractAutowireCapableBeanFactory#populateBean`
+
+示例代码：[MyInstantiationAwareBeanPostProcessor#postProcessProperties](https://github.com/wkk1994/spring-ioc-learn/blob/master/spring-bean/src/main/java/com/wkk/learn/spring/ioc/bean/cyclelife/InstantiationAwareBeanPostProcessorDemo.java)
+
+## Spring Bean Aware 接口回调阶段
+
+Spring提供了多个BeanAware接口在适当的时机进行回调：
+
+* BeanNameAware
+* BeanClassLoaderAware
+* BeanFactoryAware
+* EnvironmentAware
+* EmbeddedValueResolverAware
+* ResourceLoaderAware
+* ApplicationEventPublisherAware
+* MessageSourceAware
+* ApplicationContextAware
+
+BeanNameAware、BeanClassLoaderAware、BeanFactoryAware的回调属于BeanFactory的回调，所以在BeanFactory时会回调，但是其他的Aware属于ApplicationContext的回调机制，必须要在ApplicationContext中进行回调。
+
+BeanNameAware、BeanClassLoaderAware、BeanFactoryAware的回调顺序为BeanNameAware -> BeanClassLoaderAware -> BeanFactoryAware，参考方法`AbstractAutowireCapableBeanFactory#invokeAwareMethods`
+
+```java
+if (bean instanceof Aware) {
+  if (bean instanceof BeanNameAware) {
+    ((BeanNameAware) bean).setBeanName(beanName);
+  }
+  if (bean instanceof BeanClassLoaderAware) {
+    ClassLoader bcl = getBeanClassLoader();
+    if (bcl != null) {
+      ((BeanClassLoaderAware) bean).setBeanClassLoader(bcl);
+    }
+  }
+  if (bean instanceof BeanFactoryAware) {
+    ((BeanFactoryAware) bean).setBeanFactory(AbstractAutowireCapableBeanFactory.this);
+  }
+}
+```
+
+剩下的顺序参考：`ApplicationContextAwareProcessor#invokeAwareInterfaces`
+
+示例代码：[BeanAwareDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/spring-bean/src/main/java/com/wkk/learn/spring/ioc/bean/cyclelife/BeanAwareDemo.java)
+
