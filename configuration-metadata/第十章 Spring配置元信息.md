@@ -57,4 +57,20 @@ Spring中的xml文件的配置的xmlns和xsd之间的关系，以及xml文件的
 > bean命名前缀一般会被省略。
 > beans元素的作用：可以将一组bean元素放到beans元素中，这组bean元素都可以使用beans元素定义的属性，比如default-lazy-init、default-init-method。
 > 主动import其他配置时，被import是无法感知的，所以不太友好，一般建议平级的形式去引用其他xml配置，比如在load时，一次load多个xml配置。
-> BeanDefinitionHolder有beanDefinition、beanName、aliases三个属性，是dom解析后生成的对象。因为BeanDefinition没有beanName属性，所以使用这个类一次解析获得所有信息。
+> BeanDefinitionHolder有beanDefinition、beanName、aliases三个属性，是dom解析后生成的对象。因为BeanDefinition没有beanName属性，所以使用这个类一次解析获得所有信息
+
+## 基于Properties资源装载SpringBean配置元信息
+
+使用properties文件定义SpringBean配置元信息时，Spring支持的内置属性有：
+
+|Properties属性名|使用场景|
+|--|--|
+|(class)|Bean类全称限定名|
+|(abstract)|是否为抽象的BeanDefinition|
+|(parent)|指定parent BeanDefinintion名称|
+|(lazy-init)|是否为延迟初始化|
+|(ref)|引用其他Bean的名称|
+|(scope)|设置Bean的scope属性|
+|${n}|n表示第n+1个构造参数，比如$1|
+
+基于Properties资源的解析类是`PropertiesBeanDefinitionReader`，解析方式和`XmlBeanDefinitionReader`方式差不多，但是相比于通过xml配置Bean元信息，properties资源的定义方式有很多局限性，不支持的配置很多，比如不支持定义Bean的init-method、是否是primary、不支持自定义bean的name（会根据key的前缀截取为bean的名称）。
