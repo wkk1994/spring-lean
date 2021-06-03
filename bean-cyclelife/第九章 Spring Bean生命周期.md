@@ -33,3 +33,22 @@ Spring BeanDefinition的注册接口为`BeanDefinitionRegistry`，`DefaultListab
 > beanDefinitionMap使用ConcurrentHashMap实现，是线程安全的，但是如果BeanFactory是在初始化bean实例过程中对beanDefinitionMap进行put操作，可能导致BeanFactory在其他线程中正在遍历beanDefinitionMap的操作失败，所以在对beanDefinitionMap进行put操作时候会加锁。
 > beanDefinitionNames的作用：因为beanDefinitionMap是无序的，所以通过一个FIFO的list保存beanName声明的顺序。
 
+## Spring BeanDefinition 合并阶段
+
+Spring BeanDefinition的合并主要是进行父子BeanDefinition的合并，在合并过程中存在层次性查找的方式（从父BeanFactory中获取BeanDefinition），以及通过缓存加速查找过程（使用线程安全的ConcurrentHashMap存放已经merged查找过的BeanDefinition，mergedBeanDefinitions），最终返回的BeanDefinition都是`RootBeanDefinition`。
+
+主要逻辑代码：`AbstractBeanFactory#getMergedBeanDefinition(java.lang.String)`
+
+实现过程：
+
+* 检查当前BeanFactory的beanDefinitionMap中是否有对应的BeanDefinition的定义，没有就从父BeanFactory中获取合并后的BeanDefinitio并返回。
+* 从本地BeanFactory中获取合并的BeanDefinition；
+  * 先从缓存`mergedBeanDefinitions`中获取，有并且没有过期就返回；
+  * 调用`AbstractBeanFactory#getMergedBeanDefinition(java.lang.String, org.springframework.beans.factory.config.BeanDefinition, org.springframework.beans.factory.config.BeanDefinition)`方法开始获取合并的BeanDefinition；
+  * 这里会通过互斥锁mergedBeanDefinitions的方式获取合并的BeanDefinitin；
+  * 首先从缓存mergedBeanDefinitions获取，如果存在并且没有过期返回合并的BeanDefinitin；
+  * 否则，检查BeanDefinition的parentName是否为空，为空的话就将当前的BeanDefinition转换成RootBeanDefinition，并作为合并的BeanDefinitin返回。
+  * BeanDefinition的parentName不为空，获取合并后的parentName的BeanDefinition，这里相当于递归调用，将parentName的BeanDefinition包装成RootBeanDefinition，并使用当前的BeanDefinition覆写RootBeanDefinition，作为合并的BeanDefinitin返回。
+  * 将得到的BeanDefinition，缓存到mergedBeanDefinitions中。
+
+> 在获取parent的BeanDefinition时，会检查当前的parentName是否和正在获取BeanDefinition的beanName一致，如果一致就会从ParentBeanFactory中去查询MergedBeanDefinition，因为在一个BeanFactory中不允许beanName重复的BeanDefinition，所以会进行一个层次性的查找。
