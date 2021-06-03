@@ -18,3 +18,5 @@ spring核心编程思想学习
 ## [第八章 Spring Bean的作用域](https://github.com/wkk1994/spring-ioc-learn/blob/master/bean-scope)
 
 ## [第九章 Spring Bean生命周期](https://github.com/wkk1994/spring-ioc-learn/blob/master/bean-cyclelife)
+
+## [第十章 Spring配置元信息](https://github.com/wkk1994/spring-ioc-learn/blob/master/configuration-metadata)
