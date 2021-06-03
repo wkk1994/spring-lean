@@ -255,3 +255,13 @@ BeanDefinitionParserDelegate#parseCustomElement(org.w3c.dom.Element, BeanDefinit
 * 根据namespaceUri获取对应的NamespaceHandler：如果NamespaceHandler还没有实例化，就执行实例化和初始化（init方法）操作；
 * 构造 ParserContext；
 * 使用上一步获取到的NamespaceHandler解析元素，获取BeanDefinition。
+
+## 基于Properties资源装载外部化配置
+
+装载外部化配置有两种方式：基于注解驱动和API编程。
+
+注解驱动主要有`org.springframework.context.annotation.PropertySource`和`org.springframework.context.annotation.PropertySources`两个注解。
+
+使用API编程的方式会使用到类`org.springframework.core.env.PropertySource`和`org.springframework.core.env.PropertySources`。API编程添加 PropertySource 操作必须在 refresh 方法之前完成，否则没有效果。默认先加载的资源会覆盖后面加载的资源，在默认条件下，会加载一些系统默认的资源。
+
+示例代码：[PropertiesSourceDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/configuration-metadata/src/main/java/com/wkk/learn/spring/ioc/configuration/metadata/PropertiesSourceDemo.java)
