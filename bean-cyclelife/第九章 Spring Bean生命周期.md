@@ -52,3 +52,40 @@ Spring BeanDefinition的合并主要是进行父子BeanDefinition的合并，在
   * 将得到的BeanDefinition，缓存到mergedBeanDefinitions中。
 
 > 在获取parent的BeanDefinition时，会检查当前的parentName是否和正在获取BeanDefinition的beanName一致，如果一致就会从ParentBeanFactory中去查询MergedBeanDefinition，因为在一个BeanFactory中不允许beanName重复的BeanDefinition，所以会进行一个层次性的查找。
+
+## Spring Bean Class加载阶段
+
+Spring Bean Class加载阶段发生在`AbstractBeanFactory#doGetBean`方法调用时，最终实现Class加载的核心方法为`AbstractBeanFactory#resolveBeanClass`。Spring Bean Class加载的最终处理还是由Java ClassLoader进行类加载，只不过在加载之前进行了Java安全的校验，其中还有Spring自己实现的tempClassLoader。
+
+说明：
+
+* AbstractBeanDefinition中的beanClass字段使用的是Object类型，可以存放当前的className或者Class对象，当类被加载后beanClass就会指向加载后的Class对象，这样通过判断beanClass是否是Class类型的就知道类是否被加载过了。
+* tempClassLoader是ConfigurableBeanFactory的一个临时的ClassLoader。
+* Spring Bean Class在加载的时候默认是不进行初始化的，`Class.forName(name, false, clToUse)`。
+
+## Spring Bean实例化前阶段
+
+在Bean的实例化前阶段，会调用`InstantiationAwareBeanPostProcessor#postProcessBeforeInstantiation`方法，如果该方法返回的对象不为null，就不会执行bean接下来的实例化，用返回的对象作为Bean实例化的对象。
+
+[InstantiationAwareBeanPostProcessorDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/spring-bean/src/main/java/com/wkk/learn/spring/ioc/bean/cyclelife/InstantiationAwareBeanPostProcessorDemo.java)
+
+## Spring Bean实例化阶段
+
+Spring Bean实例化方式通常有两种：
+
+* 传统实例化方式：通过实例化策略进行实现，`InstantiationStrategy`。
+* 构造器依赖注入实例化方式。
+
+传统的实例化注入方式是通过默认无参数的构造器注入，实现方法`SimpleInstantiationStrategy#instantiate(org.springframework.beans.factory.support.RootBeanDefinition, java.lang.String, org.springframework.beans.factory.BeanFactory)`，最终还是通过Java反射执行Constructor对象的newInstance方法。
+
+构造器依赖注入实现方式，是通过获取对应的构造器方法进行实例化对象。也是通过Java反射执行Constructor对象的newInstance方法。
+
+## Spring Bean 实例化后阶段
+
+通过方法`InstantiationAwareBeanPostProcessor#postProcessAfterInstantiation`可以控制Bean实例化后属性赋值操作。
+
+方法默认返回true，如果方法返回false，表示属性赋值会被跳过。
+
+实现细节：`AbstractAutowireCapableBeanFactory#populateBean`
+
+示例代码：[InstantiationAwareBeanPostProcessorDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/spring-bean/src/main/java/com/wkk/learn/spring/ioc/bean/cyclelife/InstantiationAwareBeanPostProcessorDemo.java)
