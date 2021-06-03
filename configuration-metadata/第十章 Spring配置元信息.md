@@ -127,3 +127,7 @@ Spring中的xml文件的配置的xmlns和xsd之间的关系，以及xml文件的
 |--|--|--|
 |@PostConstruct|替换 XML 元素`<bean init-method="..." />`或InitializingBean|2.5|
 |@PreDestroy|替换 XML 元素`<bean destroy-method="..." />`或DisposableBean|2.5|
+
+## Spring Bean 配置元信息底层实现
+
+Spring BeanDefinition的解析方式主要有三种，分别是XML资源解析，实现类是`XmlBeanDefinitionReader`；Properties资源解析，实现类是`PropertiesBeanDefinitionReader`；Java注解解析，实现类是`AnnotatedBeanDefinitionReader`。其中`XmlBeanDefinitionReader`和`PropertiesBeanDefinitionReader`都是基于资源的解析方式，都实现了`AbstractBeanDefinitionReader`，`AnnotatedBeanDefinitionReader`的解析方式和资源无关，所以并没有实现`AbstractBeanDefinitionReader`。
