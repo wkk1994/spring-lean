@@ -173,3 +173,22 @@ Spring Properties资源BeanDefinition解析与注册的核心API是`PropertiesBe
 * 6.构建BeanDefinitionHolder，并registerBeanDefinition。
 
 `AnnotatedBeanDefinitionReader`对BeanDefinition的解析与注册细节可以参考代码`AnnotatedBeanDefinitionReader#doRegisterBean`。
+
+## 基于XML资源装载Spring IoC容器配置元信息
+
+Spring IoC 容器相关 XML 配置
+
+|命名空间|所属模块|Schema 资源 URL|
+|--|--|--|
+|beans|spring-beans|https://www.springframework.org/schema/beans/spring-beans.xsd|
+|context|spring-context|https://www.springframework.org/schema/context/spring-context.xsd|
+|aop|spring-aop|https://www.springframework.org/schema/aop/spring-aop.xsd|
+|tx|spring-tx|https://www.springframework.org/schema/tx/spring-tx.xsd|
+|util|spring-beans|https://www.springframework.org/schema/util/spring-util.xsd|
+|tool|spring-beans|https://www.springframework.org/schema/tool/spring-tool.xsd|
+
+与命名空间相关的有两个重要的文件`META-INF/spring.schemas`和`META-INF/spring.handlers`。
+
+`META-INF/spring.schemas`文件定义了命名空间中schmea资源的所在的地址，一般不会在url地址后加上版本号了，比如`https://www.springframework.org/schema/beans/spring-beans-4.3.xsd`，直接使用`https://www.springframework.org/schema/beans/spring-beans.xsd`有更好的兼容性，能兼容多个版本的，它可以始终获取到最新的版本。
+
+`META-INF/spring.handlers`文件定义了对应命名空间解析的类，比如`http\://www.springframework.org/schema/util=org.springframework.beans.factory.xml.UtilNamespaceHandler`
