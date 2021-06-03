@@ -21,3 +21,15 @@ Spring Bean的配置元信息的接口是BeanDefinition，Spring中的实现方�
 * AnnotatedBeanDefinition：注解标注的BeanDefinition，
 
   有三个实现分别是AnnotatedGenericBeanDefinition：基于注解的方式读取BeanDefinition，ConfigurationClassBeanDefinition：基于configclass的方式读取BeanDefinition，ScannedGenericBeanDefinition基于包扫描的方式读取BeanDefinition。
+
+## Spring Bean属性元信息
+
+和Spring Bean属性元信息相关的有：
+
+* Bean属性元信息：PropertyValues，它实现了Iterable，内部有多个PropertyValue作为元素成员组合而成，并且有一个MutablePropertyValues实现，可以通过这个实现对PropertyValue进行修改。
+
+* Bean属性上下文存储：AttributeAccessor，BeanDefinition都实现了AttributeAccessor接口，通过`AttributeAccessor#setAttribute`方法可以将属性存储到BeanDefinition中，而且不会对Bean的实例化初始化有影响，可以在需要的时候从BeanDefinition中进行获取。
+
+* Bean元信息元素：BeanMetadataElement，只有一个方法`BeanMetadataElement#getSource`，BeanDefinition中都实现了改方法，可以设置属性的来源，在合适的时机进行获取使用。
+
+示例代码：[BeanConfigurationMetadataDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/configuration-metadata/src/main/java/com/wkk/learn/spring/ioc/configuration/metadata/BeanConfigurationMetadataDemo.java)
