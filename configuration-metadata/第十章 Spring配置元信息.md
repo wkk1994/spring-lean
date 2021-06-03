@@ -40,3 +40,21 @@ Spring中的xml文件的配置的xmlns和xsd之间的关系，以及xml文件的
 
 > 什么是`outter beans`？在Spring的xml文件中，通过import导入的xml配置，当前xml配置就是导入的xml文件的`outter beans`。
 > schema和dtd的区别
+
+## 基于XML资源装载SpringBean配置元信息
+
+在XMl资源中，与SpringBean配置元信息相关的xml元素有：
+
+|xml元素|使用场景|
+|--|--|
+|`<beans:beans/>`|单个xml资源下多个spring bean配，beans只能作为xml配置的最后一项，即beans元素后面不应该再有其他非beans元素|
+|`<bean:bean/>`|单个SpringBean定义（BeanDefinition）配置|
+|`<bean:alias/>`|为SpringBean定义（BeanDefinition）映射别名|
+|`<beans:import/>`|加载外部SpringXml资源配置|
+
+基于xml资源的解析类是`XmlBeanDefinitionReader`，核心实现方法`DefaultBeanDefinitionDocumentReader#doRegisterBeanDefinitions`，最终还是依赖`BeanDefinitionParserDelegate`对不同的xml元素进行解析，支持的元素有`import`、`alias`、`bean`、`beans`，并且根据不同的xml元素进行不同的处理，比如在处理`bean`xml元素时，会根据dom解析成BeanDefinitionHolder，然后在通过`registerBeanDefinition`方法注册BeanDefinition。
+
+> bean命名前缀一般会被省略。
+> beans元素的作用：可以将一组bean元素放到beans元素中，这组bean元素都可以使用beans元素定义的属性，比如default-lazy-init、default-init-method。
+> 主动import其他配置时，被import是无法感知的，所以不太友好，一般建议平级的形式去引用其他xml配置，比如在load时，一次load多个xml配置。
+> BeanDefinitionHolder有beanDefinition、beanName、aliases三个属性，是dom解析后生成的对象。因为BeanDefinition没有beanName属性，所以使用这个类一次解析获得所有信息。
