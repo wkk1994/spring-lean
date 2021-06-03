@@ -192,3 +192,24 @@ Spring IoC 容器相关 XML 配置
 `META-INF/spring.schemas`文件定义了命名空间中schmea资源的所在的地址，一般不会在url地址后加上版本号了，比如`https://www.springframework.org/schema/beans/spring-beans-4.3.xsd`，直接使用`https://www.springframework.org/schema/beans/spring-beans.xsd`有更好的兼容性，能兼容多个版本的，它可以始终获取到最新的版本。
 
 `META-INF/spring.handlers`文件定义了对应命名空间解析的类，比如`http\://www.springframework.org/schema/util=org.springframework.beans.factory.xml.UtilNamespaceHandler`
+
+## 基于Java注解装载Spring IoC容器配置元信息
+
+Spring IoC容器装配注解：
+
+|Spring注解|场景说明|起始版本|
+|--|--|--|
+|@ImportResource|替换XML元素`<import>`|3.0|
+|@Import|导入Configuration Class|3.0|
+|@ComponentScan|扫描指定package下标注Spring模式注解的类|3.1|
+
+Spring IoC配属属性注解：
+
+|Spring 注解|场景说明| 起始版本|
+|--|--|--|
+|@PropertySource|配置属性抽象 PropertySource 注解|3.1|
+|@PropertySources|@PropertySource集合注解|4.0|
+
+@PropertySource和@PropertySources的关系，java8开始支持重复注解，所以可以在一个类上添加多个@PropertySource，以替换@PropertySources注解。
+
+示例代码：[AnnotatedSpringIoCContainerMetadataConfigurationDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/configuration-metadata/src/main/java/com/wkk/learn/spring/ioc/configuration/metadata/AnnotatedSpringIoCContainerMetadataConfigurationDemo.java)
