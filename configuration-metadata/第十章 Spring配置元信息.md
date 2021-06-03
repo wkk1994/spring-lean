@@ -131,3 +131,45 @@ Spring中的xml文件的配置的xmlns和xsd之间的关系，以及xml文件的
 ## Spring Bean 配置元信息底层实现
 
 Spring BeanDefinition的解析方式主要有三种，分别是XML资源解析，实现类是`XmlBeanDefinitionReader`；Properties资源解析，实现类是`PropertiesBeanDefinitionReader`；Java注解解析，实现类是`AnnotatedBeanDefinitionReader`。其中`XmlBeanDefinitionReader`和`PropertiesBeanDefinitionReader`都是基于资源的解析方式，都实现了`AbstractBeanDefinitionReader`，`AnnotatedBeanDefinitionReader`的解析方式和资源无关，所以并没有实现`AbstractBeanDefinitionReader`。
+
+### Spring XML资源BeanDefinition解析与注册
+
+Spring XML资源BeanDefinition解析与注册的核心类是`XmlBeanDefinitionReader`，底层依赖`BeanDefinitionDocumentReader`。
+
+`BeanDefinitionDocumentReader`的XML解析，使用的是Java DOM Level 3 API；BeanDefinition的解析使用的是`BeanDefinitionParserDelegate`类实现；BeanDefinition的注册使用`BeanDefinitionRegistry`。
+
+`BeanDefinitionDocumentReader`提供了`preProcessXml`和`postProcessXml`方法，用来在xml资源解析完和解析前进行自定义处理，目前这两个方法为空方法。可以通过继承`BeanDefinitionDocumentReader`覆盖这两个方法实现用户的自定义处理，但是需要将自定义的`BeanDefinitionDocumentReader`通过方法`XmlBeanDefinitionReader#setDocumentReaderClass`set到`XmlBeanDefinitionReader`中。
+
+`BeanDefinitionDocumentReader`中对xml资源的解析细节可以参考方法`DefaultBeanDefinitionDocumentReader#doRegisterBeanDefinitions`
+
+### Spring Properties资源BeanDefinition解析与注册
+
+Spring Properties资源BeanDefinition解析与注册的核心API是`PropertiesBeanDefinitionReader`，它的资源主要有字节流(Resource)和字符流(EncodedResource)，字节流默认编码ISO-8859-1，字符流可以指定编码方式。底层存储使用的是java.util.Properties，java.util.Properties继承了Hashtable，是线程安全的。BeanDefinition的解析是依靠内部的API实现，主要是根据properties的key进行不同的属性设置，其中包括一些内置的属性。BeanDefinition的注册也是使用`BeanDefinitionRegistry`。
+
+`PropertiesBeanDefinitionReader`中对Properties资源的解析细节可以参考方法`PropertiesBeanDefinitionReader#registerBeanDefinitions(java.util.Map<?,?>, java.lang.String, java.lang.String)`。
+
+### Spring Java注解BeanDefinition解析与注册
+
+核心API：`AnnotatedBeanDefinitionReader`：`AnnotatedBeanDefinitionReader`并没有继承`AbstractBeanDefinitionReader`或者实现`BeanDefinitionReader`，它的资源来源是类对象(java.lang.Class)。
+
+底层实现相关：
+
+* 条件评估 - ConditionEvaluator
+* Bean范围解析 - ScopeMetadataResolver
+* Bean名称生成器 - AnnotationBeanNameGenerator
+* BeanDefinition解析 - 内部 API 实现
+* BeanDefinition处理 - AnnotationConfigUtils.processCommonDefinitionAnnotations
+* BeanDefinition注册 - BeanDefinitionRegistry
+
+粗略的处理流程：
+
+* 1.根据beanClass的生成`AnnotatedGenericBeanDefinition`，这里通过`StandardAnnotationMetadata`反射的形式进行获取。
+  `StandardAnnotationMetadata`属于AnnotationMetadata的实现，使用Java反射的形式获取Class的自省信息，关于`AnnotationMetadata`的实现还有`SimpleAnnotationMetadata`，它通过ASM获取Class信息。
+
+* 2.验证@Conditional条件注解是否满足，不满足return。
+* 3.获取@Scope注解的信息，并组装成`ScopeMetadata`.
+* 4.如果没有指定name，根据名称生成器生成一个name。
+* 5.调用`AnnotationConfigUtils#processCommonDefinitionAnnotations`方法，获取bean上标注的@Primary、@Lazy、@DependsOn、@Role、@Description注解，AnnotatedBeanDefinition进行赋值。
+* 6.构建BeanDefinitionHolder，并registerBeanDefinition。
+
+`AnnotatedBeanDefinitionReader`对BeanDefinition的解析与注册细节可以参考代码`AnnotatedBeanDefinitionReader#doRegisterBean`。
