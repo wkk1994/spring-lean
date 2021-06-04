@@ -20,3 +20,5 @@ spring核心编程思想学习
 ## [第九章 Spring Bean生命周期](https://github.com/wkk1994/spring-ioc-learn/blob/master/bean-cyclelife)
 
 ## [第十章 Spring配置元信息](https://github.com/wkk1994/spring-ioc-learn/blob/master/configuration-metadata)
+
+## [第十一章 Spring资源管理](https://github.com/wkk1994/spring-ioc-learn/blob/master/resource)
