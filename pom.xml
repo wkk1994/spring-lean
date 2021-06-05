@@ -20,6 +20,7 @@
         <module>bean-cyclelife</module>
         <module>configuration-metadata</module>
         <module>resource</module>
+        <module>i18n</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
