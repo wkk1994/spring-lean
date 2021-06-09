@@ -18,6 +18,9 @@ public class User implements BeanNameAware {
 
     private City city;
 
+    private Company company;
+
+
     public User() {
         System.out.println("456789");
     }
@@ -52,6 +55,7 @@ public class User implements BeanNameAware {
                 ", name='" + name + '\'' +
                 ", beanBeam='" + beanBeam + '\'' +
                 ", city=" + city +
+                ", company=" + company +
                 '}';
     }
 
@@ -76,5 +80,13 @@ public class User implements BeanNameAware {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
