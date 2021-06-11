@@ -14,7 +14,7 @@ public class PropertyEditorDemo {
         // 模拟Spring Framework操作
         PropertyEditor propertyEditor = new StringToPropertiesPropertyEditor();
         // 有一段文本 name = 你好;
-        String text = "name=你好";
+        String text = "name=你好 \n age=12";
         propertyEditor.setAsText(text);
 
         System.out.println(propertyEditor.getValue());

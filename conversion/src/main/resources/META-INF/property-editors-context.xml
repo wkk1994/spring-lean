@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--<bean class="com.wkk.learn.spring.ioc.conversion.CustomizedPropertyEditorRegistrar"/>-->
+
+    <bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <bean class="com.wkk.learn.spring.ioc.conversion.CustomizedPropertyEditorRegistrar"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="user" class="com.wkk.learn.spring.ioc.overview.dependency.model.User">
+        <property name="id" value="1"/>
+        <property name="name" value="你好"/>
+        <property name="context">
+            <!-- properties属性-->
+            <value>
+                id=1
+                name=你好
+            </value>
+        </property>
+        <property name="context1">
+            <!-- properties属性-->
+            <value>
+                id=2
+                name=你好111
+            </value>
+        </property>
+    </bean>
+</beans>
