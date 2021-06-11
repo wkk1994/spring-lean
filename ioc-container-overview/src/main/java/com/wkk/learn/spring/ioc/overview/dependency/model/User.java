@@ -22,7 +22,10 @@ public class User implements BeanNameAware {
     private Company company;
 
     private Properties context;
+
     private Properties context1;
+
+    private String contextAsText;
 
     public User() {
         System.out.println("456789");
@@ -51,6 +54,11 @@ public class User implements BeanNameAware {
         return user;
     }
 
+    @PostConstruct
+    public void post() {
+        System.out.println("当前beanName: "+beanBeam+"初始化...");
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -60,12 +68,9 @@ public class User implements BeanNameAware {
                 ", city=" + city +
                 ", company=" + company +
                 ", context=" + context +
+                ", context1=" + context1 +
+                ", contextAsText='" + contextAsText + '\'' +
                 '}';
-    }
-
-    @PostConstruct
-    public void post() {
-        System.out.println("当前beanName: "+beanBeam+"初始化...");
     }
 
     @PreDestroy
@@ -108,5 +113,13 @@ public class User implements BeanNameAware {
 
     public void setContext1(Properties context1) {
         this.context1 = context1;
+    }
+
+    public String getContextAsText() {
+        return contextAsText;
+    }
+
+    public void setContextAsText(String contextAsText) {
+        this.contextAsText = contextAsText;
     }
 }
