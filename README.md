@@ -22,3 +22,5 @@ spring核心编程思想学习
 ## [第十章 Spring配置元信息](https://github.com/wkk1994/spring-ioc-learn/blob/master/configuration-metadata)
 
 ## [第十一章 Spring资源管理](https://github.com/wkk1994/spring-ioc-learn/blob/master/resource)
+
+## [第十五章 Spring类型转换](https://github.com/wkk1994/spring-ioc-learn/blob/master/conversion)
