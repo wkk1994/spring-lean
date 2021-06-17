@@ -12,4 +12,12 @@
     <artifactId>generic</artifactId>
     <description>Spring泛型处理示例工程</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>
