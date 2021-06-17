@@ -5,8 +5,6 @@ import org.springframework.core.GenericTypeResolver;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +51,4 @@ public class GenericTypeResolverDemo {
 
     }
 
-    static class StringList extends ArrayList<String> {
-
-    }
 }

@@ -12,6 +12,10 @@
     <artifactId>generic</artifactId>
     <description>Spring泛型处理示例工程</description>
 
+    <properties>
+        <spring.version>4.3.26.RELEASE</spring.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
