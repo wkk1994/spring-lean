@@ -128,3 +128,75 @@ if (obj == null) {
     if (arg == null) arg = "null";
 }
 ```
+
+
+## MessageSource开箱即用实现
+
+Spring的国际化接口`org.springframework.context.MessageSource`提供了两个开箱即用的实现，分别是：
+
+* 基于ResourceBundle + MessageFormat组合MessageSource实现：`org.springframework.context.support.ResourceBundleMessageSource`
+
+  ResourceBundleMessageSource的实现是通过ResourceBundle作为资源的存储，MessageFormat作为资源的解析。并且可以通过setDefaultEncoding方法设置默认的编码方式，默认是ISO-8859-1。
+
+* 可重载的基于Properties + MessageFormat组合MessageSource实现：`org.springframework.context.support.ReloadableResourceBundleMessageSource`
+
+ResourceBundleMessageSource和ReloadableResourceBundleMessageSource的getMessage(java.lang.String, java.lang.Object[], java.lang.String, java.util.Locale)方法实现细节分析：
+
+ResourceBundleMessageSource和ReloadableResourceBundleMessageSource都间接继承了AbstractMessageSource，并且没有重写getMessage方法，它们各自实现了AbstractMessageSource#resolveCode方法，它是用来获取MessageFormat的。
+
+ResourceBundleMessageSource的resolveCode方法通过basename获取ResourceBundle，然后再获取MessageFormat，其中MessageFormat的获取进行了缓存设计，避免同一个MessageFormat的多次创建。
+
+ReloadableResourceBundleMessageSource的resolveCode方法，是先获取PropertiesHolder，PropertiesHolder中保存有properties的资源信息，并且会根据properties资源的修改时间，来确定是否需要重新加载资源。
+
+## MessageSource内建依赖
+
+Spring提供了MessageSource内建Bean依赖，其中内建Bean可能的来源有：
+
+* 预注册Bean名称为messageSource，类型为MessageSource的Bean实例。
+* 默认内建实现DelegatingMessageSource，DelegatingMessageSource是具有层次性实现的MessageSource对象。
+
+Spring中MessageSource初始化过程参考AbstractApplicationContext#initMessageSource代码：
+
+```java
+protected void initMessageSource() {
+    ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+    if (beanFactory.containsLocalBean(MESSAGE_SOURCE_BEAN_NAME)) {
+        this.messageSource = beanFactory.getBean(MESSAGE_SOURCE_BEAN_NAME, MessageSource.class);
+        // Make MessageSource aware of parent MessageSource.
+        if (this.parent != null && this.messageSource instanceof HierarchicalMessageSource) {
+            HierarchicalMessageSource hms = (HierarchicalMessageSource) this.messageSource;
+            if (hms.getParentMessageSource() == null) {
+                // Only set parent context as parent MessageSource if no parent MessageSource
+                // registered already.
+                hms.setParentMessageSource(getInternalParentMessageSource());
+            }
+        }
+        if (logger.isTraceEnabled()) {
+            logger.trace("Using MessageSource [" + this.messageSource + "]");
+        }
+    }
+    else {
+        // Use empty MessageSource to be able to accept getMessage calls.
+        DelegatingMessageSource dms = new DelegatingMessageSource();
+        dms.setParentMessageSource(getInternalParentMessageSource());
+        this.messageSource = dms;
+        beanFactory.registerSingleton(MESSAGE_SOURCE_BEAN_NAME, this.messageSource);
+        if (logger.isTraceEnabled()) {
+            logger.trace("No '" + MESSAGE_SOURCE_BEAN_NAME + "' bean, using [" + this.messageSource + "]");
+        }
+    }
+}
+```
+
+**Spring中ApplicationContext对MessageSource的实现：**
+
+ApplicationContext接口继承了MessageSource接口，说明ApplicationContext子类提供了MessageSource的能力，其中AbstractApplicationContext实现MessageSource能力的方式是，在initMessageSource中将MessageSource实例作为内部属性保存，通过这个属性提供了MessageSource的能力。
+
+## Spring Boot为什么新建MssageSource Bean
+
+通过上面可以知道AbstractApplicationContext#initMessageSource方法已经决定了MessageSource内建实现，如果当前BeanFactory中不存在时会默认创建一个空的MessageSource。Spring Boot会在这之前创建一个MessageSource实例，通过`MessageSourceAutoConfiguration#messageSource`方法。Spring Boot这样做的主要原因有：
+
+* 通过这种外部化配置的方式简化MessageSource Bean的创建：因为Spring Boot的出现就是为了简化Spring配置。
+* Spring Boot基于Bean Validation校验非常普遍，需要国际化文本的支持。
+
+Spring Boot场景下自定义MessageSource示例代码：[CustomizedMessageSourceBeanDemo.java](https://github.com/wkk1994/spring-ioc-learn/blob/master/i18n/src/main/java/com/wkk/learn/spring/ioc/i18n/CustomizedMessageSourceBeanDemo.java)
