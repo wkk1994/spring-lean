@@ -26,6 +26,7 @@ public class AnnotationApplicationListenerDemo {
         applicationContext.register(MyApplicationListener.class);
         applicationContext.refresh();
         applicationContext.start();
+        applicationContext.stop();
         // 关闭上下文
         applicationContext.close();
     }
