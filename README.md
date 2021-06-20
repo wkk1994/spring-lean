@@ -23,4 +23,6 @@ spring核心编程思想学习
 
 ## [第十一章 Spring资源管理](https://github.com/wkk1994/spring-ioc-learn/blob/master/resource)
 
+## [第十二章 Spring国际化](https://github.com/wkk1994/spring-ioc-learn/blob/master/i18n)
+
 ## [第十五章 Spring类型转换](https://github.com/wkk1994/spring-ioc-learn/blob/master/conversion)
