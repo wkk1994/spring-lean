@@ -35,7 +35,17 @@ public class AsyncEventHandlerDemo {
                     }
                 }
             });
+            // 设置执行事件出现异常的处理方式
+            ((SimpleApplicationEventMulticaster) applicationEventMulticaster).setErrorHandler(err -> {
+                System.err.printf("[线程 ： %s] 当 Spring 事件异常时，原因：%s \n", Thread.currentThread().getName(), err.getMessage());
+            });
         }
+        applicationContext.addApplicationListener(new ApplicationListener<ContextClosedEvent>() {
+            @Override
+            public void onApplicationEvent(ContextClosedEvent event) {
+                throw new RuntimeException("抛出异常");
+            }
+        });
         applicationContext.publishEvent(new MySpringEvent("Hello, Event"));
         applicationContext.close();
     }
