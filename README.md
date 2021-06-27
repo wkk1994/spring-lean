@@ -25,4 +25,6 @@ spring核心编程思想学习
 
 ## [第十二章 Spring国际化](https://github.com/wkk1994/spring-ioc-learn/blob/master/i18n)
 
+## [第十三章 Spring校验](https://github.com/wkk1994/spring-ioc-learn/blob/master/validation)
+
 ## [第十五章 Spring类型转换](https://github.com/wkk1994/spring-ioc-learn/blob/master/conversion)
