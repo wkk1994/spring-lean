@@ -45,6 +45,9 @@ public class UserHolder implements InitializingBean, SmartInitializingSingleton,
         this.description = description;
     }
 
+    public UserHolder() {
+    }
+
     public UserHolder(User user) {
         this.user = user;
     }
